@@ -1,0 +1,18 @@
+2016-12-11 16:33:47,741 [main] INFO  c.g.e.m.h.c.ui.Html5AppCoreUIPlugin - Pluging started
+2016-12-11 16:33:51,804 [Worker-4] INFO  o.e.m.c.i.i.nexus.NexusIndexManager - Updating index for repository: central|http://repo.maven.apache.org/maven2
+2016-12-11 16:33:52,205 [Worker-4] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2016-12-11 16:34:03,946 [Worker-3] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2016-12-11 16:34:04,541 [New I/O client worker #2-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/myeclipse/org.eclipse.emf.common/2.5.0/org.eclipse.emf.common-2.5.0.jar
+2016-12-11 16:34:04,600 [Worker-3] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2016-12-11 16:34:05,186 [New I/O client worker #3-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/myeclipse/org.eclipse.emf.ecore/2.5.0/org.eclipse.emf.ecore-2.5.0.jar
+2016-12-11 16:34:05,230 [Worker-3] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2016-12-11 16:34:05,835 [New I/O client worker #4-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/myeclipse/org.eclipse.emf.ecore.xmi/2.5.0/org.eclipse.emf.ecore.xmi-2.5.0.jar
+2016-12-11 16:34:05,874 [Worker-3] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2016-12-11 16:34:06,463 [New I/O client worker #5-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-multipart/1.0.3.1/jersey-multipart-1.0.3.1.jar
+2016-12-11 16:34:06,500 [Worker-3] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2016-12-11 16:34:07,086 [New I/O client worker #6-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-multipart/1.4/jersey-multipart-1.4.jar
+2016-12-11 16:34:07,128 [Worker-3] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2016-12-11 16:34:07,725 [New I/O client worker #7-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/webservices-extra/1.1/webservices-extra-1.1.jar
+2016-12-11 16:34:07,779 [Worker-3] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2016-12-11 16:34:08,375 [New I/O client worker #8-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/webservices-rt/1.1/webservices-rt-1.1.jar
+2016-12-11 16:34:09,738 [Worker-3] INFO  o.e.m.c.i.i.nexus.NexusIndexManager - Updated local repository index

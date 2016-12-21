@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="app.home.dao.ArctileMapper">
+	<!--Arctile映射 -->
+	<resultMap type="app.home.model.Arctile" id="BaseResultMap">
+		<id column="arctile_id" property="arctile_id" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="vector" property="vector" jdbcType="VARCHAR" />
+		<result column="pv" property="pv" jdbcType="VARCHAR" />
+		<result column="channel" property="channel" jdbcType="VARCHAR" />
+		<result column="posttime" property="posttime" jdbcType="VARCHAR" />
+		<result column="weight" property="weight" jdbcType="DOUBLE" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="thumbnail_url" property="thumbnail_url"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!--返回arctile的id，title，vector -->
+	<resultMap type="app.home.model.ArctileFew" id="ArctileLittleBaseResultMap">
+		<id column="arctile_id" property="arctile_id" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="vector" property="vector" jdbcType="VARCHAR" />
+		<result column="weight" property="weight" jdbcType="DOUBLE" />
+	</resultMap>
+	<!--返回arctile的id，title -->
+	<resultMap type="app.home.model.ArctileLittle" id="BaseResultArctileLittle">
+		<id column="arctile_id" property="arctile_id" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+	</resultMap>
+	<!--ArctileRecmmend映射 -->
+	<resultMap type="app.home.model.ArctileLittle" id="ArctileRecmmendBaseResultMap">
+		<id column="arctile_id" property="arctileid" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="thumbnail_url" property="thumbnail_url"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<!--Log映射 -->
+	<resultMap type="app.home.model.Log" id="LogBaseResultMap">
+		<result column="user_id" property="userid" jdbcType="INTEGER" />
+		<result column="arctile_id" property="arctileid" jdbcType="INTEGER" />
+		<result column="updatetime" property="updatetime" jdbcType="VARCHAR" />
+		<result column="read" property="read" jdbcType="INTEGER" />
+	</resultMap>
+
+	<select id="selectloged" parameterType="java.lang.Integer"
+		resultType="java.lang.Integer">
+		SELECT arctile_id FROM log WHERE
+		user_id=#{userid,jdbcType=INTEGER}
+	</select>
+
+	<!--查询出还没有看过的文章 -->
+	<select id="selectArctileOutRead" resultMap="ArctileLittleBaseResultMap">
+	
+		SELECT arctile_id,title,vector,weight FROM arctile WHERE
+		NOT EXISTS (
+		SELECT * FROM log WHERE
+		arctile.arctile_id= log.arctile_id AND log.user_id=#{userid,jdbcType=INTEGER}
+		) 
+
+	</select>
+
+	<!--查询除还没有看过的文章，当没有推荐文章时 -->
+	<select id="selectArctileOutReadWhenNoArctole" resultMap="ArctileRecmmendBaseResultMap">
+		SELECT arctile_id,title,url,thumbnail_url FROM arctile WHERE
+		NOT EXISTS (
+		SELECT * FROM log WHERE
+		arctile.arctile_id= log.arctile_id AND log.user_id=#{userid,jdbcType=INTEGER}
+		) LIMIT 20
+	</select>
+	<!-- -->
+	<select id="selecetArctileVectorById" parameterType="java.lang.Integer"
+		resultType="String">
+		SELECT vector FROM arctile WHERE
+		arctile_id=#{arctileid,jdbcType=INTEGER}
+	</select>
+	<!--用户vector为null时的推荐文章 -->
+	<select id="SelectRecommendArctile" resultMap="BaseResultArctileLittle">
+		select arctile_id,
+		title,url,thumbnail_url
+		from arctile ORDER BY weight desc
+		LIMIT 20
+	</select>
+	<!--updateUserVector更新用户向量 -->
+	<update id="updateUserVector" parameterType="app.home.model.User">
+		UPDATE `user` SET
+		vector =#{vector,jdbcType=VARCHAR} WHERE user_id =
+		#{user_id,jdbcType=INTEGER}
+	</update>
+	<!-- //将推荐的文章发送给log -->
+	<insert id="insertLogByRecommendarctile" parameterType="app.home.model.Log">
+		INSERT
+		INTO log (user_id,arctile_id,updatetime) SELECT
+		#{userid,jdbcType=INTEGER},#{arctileid,jdbcType=INTEGER},
+		#{updatetime,jdbcType=VARCHAR}
+		FROM
+		DUAL
+		WHERE
+		NOT EXISTS (
+		SELECT
+		user_id,arctile_id
+		FROM
+		log
+		WHERE
+		user_id = #{userid,jdbcType=INTEGER} AND
+		arctile_id=#{arctileid,jdbcType=INTEGER}
+		)
+	</insert>
+	<!--根据文章的id查出要给前段返回的属性 -->
+	<select id="arctileRecommend" parameterType="java.lang.Integer"
+		resultMap="ArctileRecmmendBaseResultMap">
+		SELECT arctile_id, title,url,thumbnail_url FROM arctile
+		WHERE arctile_id=#{arctileid,jdbcType=INTEGER}
+	</select>
+	<!--=删除发送给前段的文章 -->
+	<delete id="deleteSendArctileByUserid" parameterType="java.lang.Integer">
+		DELETE FROM
+		arctilebuffer WHERE user_id=#{0}
+		AND arctile_id=#{1}
+	</delete>
+</mapper>

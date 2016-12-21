@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="app.home.dao.UserMapper">
+	<resultMap id="BaseResultMap" type="app.home.model.User">
+		<id column="user_id" property="user_id" jdbcType="INTEGER" />
+		<result column="vector" property="vector" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap type="app.home.model.Log" id="LogBaseResultMap">
+		<result column="user_id" property="userid" jdbcType="INTEGER" />
+		<result column="arctile_id" property="arctileid" jdbcType="INTEGER" />
+		<result column="updatetime" property="updatetime" jdbcType="VARCHAR" />
+		<result column="read" property="read" jdbcType="INTEGER" />
+	</resultMap>
+	<select id="selectUserHaveVector" resultType="String">
+		SELECT vector FROM
+		`user` WHERE user_id=#{userid,jdbcType=INTEGER}
+	</select>
+	<select id="ifLogged" resultMap="LogBaseResultMap"
+		parameterType="java.lang.Integer">
+		SELECT user_id,arctile_id,updatetime
+		FROM log WHERE
+		user_id=#{0}
+		AND arctile_id=#{1}
+	</select>
+	<!--插入查询的历史 -->
+	<insert id="insertLog" parameterType="app.home.model.Log">
+		UPDATE log
+		SET `read` = 1
+		WHERE
+		user_id = #{userid,jdbcType=INTEGER}
+		AND arctile_id
+		=#{arctileid,jdbcType=INTEGER}
+	</insert>
+	<!--//插入cookid并返回自增主键 -->
+	<insert id="insertResultId" useGeneratedKeys="true" keyProperty="user_id"
+		parameterType="app.home.model.User"> INSERT INTO `user` (user_id,vector)
+		VALUES (#{user_id,jdbcType=INTEGER},#{vector,jdbcType=VARCHAR})
+	</insert>
+</mapper>

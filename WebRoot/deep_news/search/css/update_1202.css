@@ -1,0 +1,11 @@
+.top_bar #top_refresh {
+	margin-left: 65%;
+	margin-top: 15px;
+	width: 15px;
+	height: 15px;
+	background: #2C81CE url(../img/refresh.png) no-repeat;
+	background-size: 15px 15px;
+	position: absolute;
+
+
+}

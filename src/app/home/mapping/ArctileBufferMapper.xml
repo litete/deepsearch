@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="app.home.dao.ArctileBufferMapper">
+	<resultMap type="app.home.model.ArctileBuffer" id="ArctileBufferBaseResultMap">
+		<result column="user_id" property="userid" jdbcType="INTEGER" />
+		<result column="arctile_id" property="arctileid" jdbcType="INTEGER" />
+		<result column="arctile_weight" property="arctileweight" jdbcType="DOUBLE" />
+		<result column="updatetime" property="updatetime" jdbcType="VARCHAR" />
+	</resultMap>
+<!-- 查询是否有推荐文章 查询出20篇  -->
+<select id="selectIfRecommendArctiled" resultMap="ArctileBufferBaseResultMap" >
+	SELECT * FROM arctilebuffer WHERE user_id=#{useriid,jdbcType=INTEGER}  
+		ORDER BY updatetime,arctile_weight DESC LIMIT 20
+</select>
+
+
+
+	<insert id="saveUseridAndArctileid" parameterType="app.home.model.ArctileBuffer">
+		INSERT INTO arctilebuffer
+		(user_id,arctile_id,arctile_weight,updatetime) SELECT
+		#{userid,jdbcType=INTEGER},
+		#{arctileid,jdbcType=INTEGER},
+		#{arctileweight,jdbcType=DOUBLE},
+		#{updatetime,jdbcType=VARCHAR}
+		FROM  DUAL
+		WHERE
+		NOT EXISTS (
+		SELECT
+		user_id,arctile_id
+		FROM
+		arctilebuffer
+		WHERE
+		user_id = #{userid,jdbcType=INTEGER} AND arctile_id=#{arctileid,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertLoged" parameterType="app.home.model.Log">
+		INSERT INTO log (user_id,arctile_id,updatetime)
+		VALUES
+		(#{userid,jdbcType=INTEGER},
+		#{arctileid,jdbcType=VARCHAR},
+		#{updatetime,jdbcType=VARCHAR});
+	</insert>
+</mapper>

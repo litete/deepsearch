@@ -1,0 +1,1 @@
+window.ttGTM=function(){var t=!1,n={atOnce:!1};listener.on("com.toutiao.gtm","ready",function(){for(t=!0;o.length;){var n=o.shift();"function"==typeof n&&n()}});var o=[];return{ready:function(e,f){f=$.extend({},n,f),t||f.atOnce?"function"==typeof e&&e():o.push(e)}}}();
