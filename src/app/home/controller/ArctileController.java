@@ -1,46 +1,26 @@
 package app.home.controller;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import app.home.Singleton.SingleTon;
+import app.home.function.CosineDistance;
+import app.home.function.CosineDistance.Vector;
+import app.home.model.*;
+import app.home.service.ArctileBufferService;
+import app.home.service.ArctileService;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.JavaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import app.home.Singleton.SingleTon;
-import app.home.function.CosineDistance;
-import app.home.function.CosineDistance.Vector;
-import app.home.model.Arctile;
-import app.home.model.ArctileBuffer;
-import app.home.model.ArctileCountResult;
-import app.home.model.ArctileFew;
-import app.home.model.ArctileLittle;
-import app.home.model.ArctileRecommend;
-import app.home.model.Log;
-import app.home.model.LogLittle;
-import app.home.model.User;
-import app.home.service.ArctileBufferService;
-import app.home.service.ArctileService;
-import app.home.service.UserService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @Controller
 @RequestMapping("/arctile")

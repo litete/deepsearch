@@ -1,4 +1,4 @@
-﻿package app.home.function;
+package app.home.function;
 
 import java.util.ArrayList;
 import java.util.List;
