@@ -75,7 +75,9 @@ public class ArctileController extends BaseController{
 			User user=new User();
 			user.setUser_id(userid);
 			user.setVector(userVectorString);
-			MyThead myThead=new MyThead(user);
+			//MyThead myThead=new MyThead(user);
+			// 启动更新推荐文章
+			startRecommendArctile(user);
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			//用户的向量A
 			CosineDistance.Vector arctileVectors=cosineDistance.new Vector();
@@ -203,32 +205,40 @@ public class ArctileController extends BaseController{
 			}
 		}
 		//启动更新推荐文章
-		public class MyThead implements Runnable{
-               private User user;
-               public MyThead(User user){
-            	   this.user=user;
-               }
-			@Override
-			public void run() {
-				//User user=new User();
-				int userid=user.getUser_id();
-				String userVectorString=user.getVector();
-				System.out.println("Userid是:"+userid);
-				user.setUser_id(userid);
-				user.setVector(userVectorString);
-				arctileService.updateUserVector(user);
-				try {
-					Thread.sleep(30000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+	    public void startRecommendArctile(User user){
+			int userid=user.getUser_id();
+			String userVectorString=user.getVector();
+			System.out.println("Userid是:"+userid);
+			user.setUser_id(userid);
+			user.setVector(userVectorString);
+			int i=arctileService.updateUserVector(user);
+		}
+//		public class MyThead implements Runnable{
+//               private User user;
+//               public MyThead(User user){
+//            	   this.user=user;
+//               }
+//			@Override
+//			public void run() {
+//				//User user=new User();
+//				int userid=user.getUser_id();
+//				String userVectorString=user.getVector();
+//				System.out.println("Userid是:"+userid);
+//				user.setUser_id(userid);
+//				user.setVector(userVectorString);
+//				arctileService.updateUserVector(user);
+//				try {
+//					Thread.sleep(30000);
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 //	            //30秒一次
 //				Scheduleddo scheduleddo=new Scheduleddo();
 //				System.out.println("Userid是:"+user.getUser_id());
 //				scheduleddo.updateScheduled(user);
 				
-			}}
+		//	}}
 
 		//将double数组转为String
 		private String doubleToString(double[] arctileVectorDouble) {

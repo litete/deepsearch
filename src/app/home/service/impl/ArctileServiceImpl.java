@@ -75,8 +75,8 @@ public class ArctileServiceImpl implements ArctileService {
 	}
 	////更新用户向量
 	@Override
-	public void updateUserVector(User user) {
-		thismapper.updateUserVector(user);
+	public int updateUserVector(User user) {
+		return thismapper.updateUserVector(user);
 		
 	}
 	@Override

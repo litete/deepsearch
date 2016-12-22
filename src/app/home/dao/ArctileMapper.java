@@ -26,7 +26,7 @@ public interface ArctileMapper {
 		//删除发送给前端的文章
 		int deleteSendArctileByUserid(int userid,int arctileid);
 		////更新用户向量
-		void updateUserVector(User user);
+		int updateUserVector(User user);
 		//将推荐的文章发送给log
 		int insertLogByRecommendarctile(Log log);
 		//查询除还没有看过的文章，当没有推荐文章时 

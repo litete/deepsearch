@@ -27,7 +27,7 @@ public interface ArctileService {
 	//删除给前段的文章
 	int deleteSendArctileByUserid(int userid,int arctileid);
 	//更新用户向量
-	void updateUserVector(User user);
+	int updateUserVector(User user);
 	//将推荐的文章写到log表里
 	int insertLogByRecommendarctile(Log log);
 	

@@ -61,7 +61,7 @@ public class ArctileBufferController {
 			e.printStackTrace();
 		}
 		//	return "redirect:/arctile/arctileRecommend.do";
-			return "";
+			return null;
 }
 		
 	}

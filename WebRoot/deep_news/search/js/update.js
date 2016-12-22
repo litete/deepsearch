@@ -313,7 +313,9 @@ if (document.body) {
 	if (document.documentElement) {
 		document.documentElement.scrollTop = 0;
 	}
-
+	//$.post("../user/uaid.do",{test:JSON.stringify(datasend2)},function(data){
+	//	console.log("return data:"+data);
+	//})
 	$.ajax({
 		type:'GET',
 		//url:'http://27.148.153.187:3306/deepsearch/user/userid.do?userid=' + 1,
@@ -356,20 +358,22 @@ if (document.body) {
 						updatetime: currentdate
 					};
 
-
-					$.ajax({
-						type:'POST',
-						//url:'http://27.148.153.187:3306/deepsearch/user/uaid.do',																//发用户id、文章ID，时间的地址
-						url:'../user/uaid.do',
-						data:JSON.stringify(datasend2),
-						contentType: 'application/json',
-						dataType:'json',
-						success:function(data,status){
-							if(status=='success'){
-								alert('请求成功');
-							}
-						}
+					$.post("../user/uaid.do",{test:JSON.stringify(datasend2)},function(data){
+						console.log("return data:"+data);
 					})
+					//$.ajax({
+					//	type:'POST',
+					//	//url:'http://27.148.153.187:3306/deepsearch/user/uaid.do',																//发用户id、文章ID，时间的地址
+					//	url:'../user/uaid.do',
+					//	data:JSON.stringify(datasend2),
+					//	contentType: 'application/json',
+					//	dataType:'json',
+					//	success:function(data,status){
+					//		if(status=='success'){
+					//			alert('请求成功');
+					//		}
+					//	}
+					//})
 				}
 			)
 
