@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -43,11 +45,13 @@ public class ArctileBufferController {
 			for (int i = 0; i < ifHaveRecommendArctileList.size(); i++) {
 				ArctileBuffer arctileBuffer=ifHaveRecommendArctileList.get(i);
 				int arctileBufferid=arctileBuffer.getArctileid();
+				System.out.println("arctileBufferid"+arctileBufferid);
 				list.add(arctileBufferid);
 			}
+			System.out.println("ArctileBufferController的list"+list.size());
 			request.setAttribute("arctileBufferidlist", list);
 			request.setAttribute("userid", userid);
-/*           try {
+          try {
 			request.getRequestDispatcher("/arctile/arctileRecommend.do").forward(request, response);
 		} catch (ServletException e) {
 			// TODO Auto-generated catch block
@@ -55,8 +59,9 @@ public class ArctileBufferController {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
-			return "redirect:/arctile/arctileRecommend.do";
+		}
+		//	return "redirect:/arctile/arctileRecommend.do";
+			return "";
 }
 		
 	}

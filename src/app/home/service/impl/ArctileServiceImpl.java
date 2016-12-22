@@ -64,7 +64,7 @@ public class ArctileServiceImpl implements ArctileService {
 		return thismapper.selecetArctileVectorById(arctileid);
 	}
 	@Override
-	public ArctileRecommend arctileRecommend(int arctileid) {
+	public ArctileLittle arctileRecommend(int arctileid) {
 		// TODO Auto-generated method stub
 		return thismapper.arctileRecommend(arctileid);
 	}

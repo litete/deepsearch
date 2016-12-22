@@ -45,17 +45,20 @@ public class ArctileController extends BaseController{
 
 	//有vector时的推荐文章
 		@RequestMapping("/haveVector")
-		private void haveVector(@RequestParam int userid,@RequestParam int arctileid,
-				@RequestParam String updatetime) {
+		private void haveVector(HttpServletRequest request/*,@RequestParam int userid,@RequestParam int arctileid,
+				@RequestParam String updatetime*/) {
+			Log log= (Log) request.getAttribute("log");
+			int arctileid= log.getArctileid();
+			int userid=log.getUserid();
+			String updatetime=log.getUpdatetime();
+
 			CosineDistance cosineDistance=SingleTon.getcosineDistance();
-			//		//将用户看过的文章写入log
-			//		int logedResult=arctileBufferService.insertLoged(userid, arctileid, updatetime);
-			//System.out.println(arctileid);
 			//更新用户vector
+			System.out.println("进入selectArctileVectorById方法");
 			String arctileVector=arctileService.selectArctileVectorById(arctileid);
 			//判空???????????????????????????????????????????????????????
 			if (arctileVector==null) {
-
+            return;
 			}
 			System.out.println("arctileid:"+arctileid);
 			System.out.println("arctileVector:,"+arctileVector);
@@ -89,13 +92,13 @@ public class ArctileController extends BaseController{
 			String[] outRead = new String[outReadList.size()];
 
 			// 1-余弦的余数的数组
-			double[] residueDouble = new double[3000];
+			double[] residueDouble = new double[outRead.length];
 
 			// 初始化返回结果的List
 			List<ArctileCountResult> arctileCountResults = new ArrayList();
 			//ArctileCountResult arctileCountResult = SingleTon.getArctileCountResult();
 			for (int i = 0; i < outReadList.size(); i++) {
-				double[] outReadDouble = new double[3000];
+				double[] outReadDouble = new double[outRead.length];
 				ArctileFew arctileFew = outReadList.get(i);
 				System.out.println("arctileFew.getArctile_id():"+ arctileFew.getArctile_id());
 				// 长度待定
@@ -104,9 +107,11 @@ public class ArctileController extends BaseController{
 					outRead[i] = " ";
 					
 				}
+
 				System.out.println("我已经运行到这了");
+				System.out.println("i:"+i);
 				System.out.println(outRead[i] + ",");
-				String[] outReadString = new String[3000];
+				String[] outReadString = new String[301];
 				// 将字符串分割
 				// 报空字符串异常
 				outReadString = outRead[i].split(" ");
@@ -342,24 +347,25 @@ public class ArctileController extends BaseController{
 		@RequestMapping("/arctileRecommend")
 		@ResponseBody
 		private String arctileRecommend(HttpServletRequest request,HttpServletResponse response) {
-			ArrayList arctileBufferidlist = (ArrayList) request.getAttribute("arctileBufferidlist");
-			System.out.println(arctileBufferidlist.size()+"hahaaha1");
+			List arctileBufferidlist = (List) request.getAttribute("arctileBufferidlist");
+
 			int userid=(Integer) request.getAttribute("userid");
 			System.out.println("userid:"+userid);
-			List<ArctileRecommend>arctileRecommendlist=new ArrayList();
+			System.out.println(arctileBufferidlist.size()+"hahaaha1");
+			List<ArctileLittle>arctileLittlelist=new ArrayList();
 			//HashMap<String, ArctileRecommend>map=new HashMap<>();
 			HashMap<String, List>map=new HashMap();
 			for (int i = 0; i < arctileBufferidlist.size(); i++) {
 				System.out.println(arctileBufferidlist.get(i)+"////");
 				int arctileid=(Integer) arctileBufferidlist.get(i);
-				ArctileRecommend arctileRecommend=(ArctileRecommend) arctileService.arctileRecommend(arctileid);
-				arctileRecommendlist.add(arctileRecommend);
+				ArctileLittle arctileLittle=(ArctileLittle) arctileService.arctileRecommend(arctileid);
+				arctileLittlelist.add(arctileLittle);
 				//map.put("arctile", arctileRecommend);
 				System.out.println(userid+"........"+arctileid);
 				int ii=arctileService.deleteSendArctileByUserid(userid, arctileid);
 				System.out.println(ii+"===========");
 			}
-			map.put("arctile", arctileRecommendlist);
+			map.put("arctile", arctileLittlelist);
 			ObjectMapper obj=SingleTon.getObjectMapper();
 			String arctileRecommendStr=null;
 			try {

@@ -23,7 +23,7 @@ public interface ArctileService {
 	 ArctileLittle SelectRecommendArctileById(int arctileid);
 	 String selectArctileVectorById(int arctileid);
 	 //有推荐文章，根据其id找出其属性
-	ArctileRecommend arctileRecommend(int arctileid);
+	 ArctileLittle arctileRecommend(int arctileid);
 	//删除给前段的文章
 	int deleteSendArctileByUserid(int userid,int arctileid);
 	//更新用户向量

@@ -22,7 +22,7 @@ public interface ArctileMapper {
 		//根据文章id查询出文章vector
 		String selecetArctileVectorById(int arctileid);
 		//根据文章id查出要给前端的文章属性
-		ArctileRecommend arctileRecommend(int arctileid);
+		ArctileLittle arctileRecommend(int arctileid);
 		//删除发送给前端的文章
 		int deleteSendArctileByUserid(int userid,int arctileid);
 		////更新用户向量

@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sun.deploy.net.HttpResponse;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -68,7 +70,7 @@ public class UserController extends BaseController {
 		@RequestMapping(value="/uaid",method=RequestMethod.POST)
 		//@RequestBody不能省，因为前台发过来的数据是json数据，得用这个注解去解析该怎么接收这些数据给pojo类的对象
 		@ResponseBody
-		private String selectUserHaveVector(String test ) {
+		private void selectUserHaveVector(String test,HttpServletRequest request,HttpServletResponse response) {
 			System.out.println("--------"+test);
 			Log logg=new Log();
 		    ObjectMapper obj=SingleTon.getObjectMapper();
@@ -84,7 +86,7 @@ public class UserController extends BaseController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			int userid=logg.getArctileid();
+			int userid=logg.getUserid();
 			int arctileid=logg.getArctileid();
 			String updatetime=logg.getUpdatetime();
 			User user=new User();
@@ -93,36 +95,26 @@ public class UserController extends BaseController {
 		         userid = thisService.insertResultId(user);
 		         System.out.println("cookie值："+userid);
 		        }
-//		        System.out.println("user值"+userid);
-//		        int arctileid=log.getArctile_id();
-//		        String  updattime=log.getUpdatetime();
+		        System.out.println("user值"+userid);
 			//查询有没有看过
-		      //  System.out.println("查询有没有看过");
-			/*Log logg=new Log();
-			         logg.setArctileid(arctileid);
+			//Log log=new Log();
 			         logg.setUserid(userid);
-			         logg.setUpdatetime(updatetime);*/
-			//	System.out.println("已经运行到这了");
-//			System.out.println("接受到的参数为："+logg.getArctileid());
-//				int s=thisService.insertLoged(logg);
-//				//System.out.println("过来了");
-//				System.out.println("s:"+s);
-			return "redirect:/arctile/haveVector.do?userid="+userid
-							+"&&arctileid="+arctileid+"&&updatetime="+updatetime;
+				int s=thisService.insertLoged(logg);
+			request.setAttribute("log",logg);
+			try {
+				request.getRequestDispatcher("/arctile/haveVector.do").forward(request,response);
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			//return "";
+//			return "redirect:/arctile/haveVector.do?userid="+userid
+//							+"&&arctileid="+arctileid+"&&updatetime="+updatetime;
 	
 		}
 	
-/*	//判断用户是否为第一次进入,根据vector是否为空
-	@RequestMapping(value="/userid",produces="application/json;charset=UTF-8")
-	//@RequestBody不能省，因为前台发过来的数据是json数据，得用这个注解去解析该怎么接收这些数据给pojo类的对象。  
-	private String selectUserHaveVector(HttpServletRequest request,@RequestParam int  userid) { 
-		String vector =  thisService.selectUserHaveVector(userid);
-		if(vector==null){
-			return "redirect:"+arctileString+"nullVector.do";
-		}else{
-			
-			return "redirect:"+arctileString+"haveVector.do?id="+userid;
-		}*/
+
 
 
 
