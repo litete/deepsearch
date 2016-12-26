@@ -23,7 +23,10 @@ function ckeckUserId(){
 function refresh(userid) {
 		$.ajax({
 			type:'GET',
-			url:'../user/userid.do?userid='+1,
+			//----------------------------------------------------------
+			//url:'../user/userid.do?userid='+1,
+			url:'http://localhost:8080/user/userid.do?userid='+1,
+			//-------------------------------------------------------------
 			async:'false',
 			
 			success:function(data){
@@ -62,10 +65,11 @@ function refresh(userid) {
 							};
 							 
 					console.log(JSON.stringify(datasend2))
+						//-------------------------------------------------------
 					$.post("../user/uaid.do",{test:JSON.stringify(datasend2)},function(data){
 						console.log("return data:"+data);
 					})
-					
+					//----------------------------------------------------------------------
 	/*				$.ajax({
 						type:'POST',
 						url:'../user/uaid.do',																//发用户id、文章ID，时间的地址
@@ -320,7 +324,11 @@ if (document.body) {
 		type:'GET',
 		//url:'http://27.148.153.187:3306/deepsearch/user/userid.do?userid=' + 1,
 		//url:'http://localhost:8080/deepsearch/user/userid.do?userid=' + 1,
-		url:'../user/userid.do?userid='+1,
+		//----------------------------------------------------------------------------------
+		//url:'../user/userid.do?userid='+1,
+		url:'http://localhost:8080/user/userid.do?userid='+1,
+		url:'http://localhost:3306/user/userid.do?userid='+1,
+		//---------------------------------------------------------------------------------
 		async:'false',
 
 		success:function(data){
