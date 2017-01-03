@@ -10,7 +10,7 @@ var userid = "";
 
 
 //检查userid  
-function ckeckUserId(){
+function checkUserId(){
 		
 		userid = localStorage.getItem("ds_userId");
 		if( userid == null||userid == ""){
@@ -23,18 +23,20 @@ function ckeckUserId(){
 function refresh(userid) {
 		$.ajax({
 			type:'GET',
-			//----------------------------------------------------------
-			//url:'../user/userid.do?userid='+1,
-			url:'http://localhost:8080/user/userid.do?userid='+1,
-			//-------------------------------------------------------------
+			//url:'http://27.148.153.187:3306/deepsearch/user/userid.do?userid=' + userid,
+			url:'http://localhost:8080/deepsearch/user/userid.do?userid=' + userid,
+			//url:'http://localhost:8080/deepsearch/user/userid.do?userid=' + 1,
 			async:'false',
 			
 			success:function(data){
 				data = JSON.parse(data);
-				//console.log(JSON.parse(data));
-		    
+				console.log(data);
+		    	
 				article_list = JSON.parse(data);
-				
+
+				console.log(article_list);
+
+				localStorage.setItem('ds_userId',article_list.arctile[0].userid);
 				for (var i = 0; i < article_list.arctile.length; i++) {							//第一次加载页面，循环生成
 					newSection(article_list.arctile[i]); //传入的是某一条
 				}
@@ -59,42 +61,32 @@ function refresh(userid) {
 							+ seperator2 + date.getSeconds();
 					//console.log(currentdate);												//当期那时间
 					var datasend2 = {
-							 userid: 1,
+							 userid: userid,
 							 arctileid: a,
 							 updatetime: currentdate
 							};
 							 
-					console.log(JSON.stringify(datasend2))
-						//-------------------------------------------------------
-					$.post("../user/uaid.do",{test:JSON.stringify(datasend2)},function(data){
-						console.log("return data:"+data);
-					})
-					//----------------------------------------------------------------------
-	/*				$.ajax({
-						type:'POST',
-						url:'../user/uaid.do',																//发用户id、文章ID，时间的地址
-						//data:JSON.stringify(datasend2),
-						data:datasend2,
-						//contentType: 'application/x-www-form-urlencoded',
-						//contentType : 'application/json',
-						//dataType:'json',
-						success:function(data,status){
-							if(status=='success'){
-								alert('请求成功');
-							}
+					$.post(
+						//'http://localhost:8080/deepsearch/user/userid.do?userid=' + userid,
+					    '../user/uaid.do', {
+					        data: JSON.stringify(datasend2),
+					        async: false
+					    },
+					    function(res) {
+					        console.log(res);
 						}
-					})*/
+					);
 				}			
 				) 
 			
 			}
 		})	
 }
-//
+
 $(document).ready(function(){
 	   
 	
-	ckeckUserId();										//检查设置id	
+	checkUserId();										//检查设置id	
 
 	refresh(userid);	 //根据id请求到文章列表
 	
@@ -293,10 +285,11 @@ window.onscroll = function () {
 	//console.log(getScrollHeight());
 	//监听事件内容
 	if(getScrollHeight() == getWindowHeight() + getDocumentTop()){
+		checkUserId();
 		//console.log('滚动到底部')
 		//当滚动条到底时,这里是触发内容
 		//异步请求数据,局部刷新dom
-		refresh(1);
+		refresh(userid);
 		// turn();																			//旋转
 		//refresh(userid);																//请求数据
 		//删除原数据
@@ -317,18 +310,13 @@ if (document.body) {
 	if (document.documentElement) {
 		document.documentElement.scrollTop = 0;
 	}
-	//$.post("../user/uaid.do",{test:JSON.stringify(datasend2)},function(data){
-	//	console.log("return data:"+data);
-	//})
+
+	checkUserId();
 	$.ajax({
 		type:'GET',
-		//url:'http://27.148.153.187:3306/deepsearch/user/userid.do?userid=' + 1,
+		//url:'http://27.148.153.187:3306/deepsearch/user/userid.do?userid=' + userid,
+		url:'http://localhost:8080/deepsearch/user/userid.do?userid=' + userid,
 		//url:'http://localhost:8080/deepsearch/user/userid.do?userid=' + 1,
-		//----------------------------------------------------------------------------------
-		//url:'../user/userid.do?userid='+1,
-		url:'http://localhost:8080/user/userid.do?userid='+1,
-		url:'http://localhost:3306/user/userid.do?userid='+1,
-		//---------------------------------------------------------------------------------
 		async:'false',
 
 		success:function(data){
@@ -361,27 +349,25 @@ if (document.body) {
 						+ seperator2 + date.getSeconds();
 					//console.log(currentdate);												//当期那时间
 					var datasend2 = {
-						userid: 1,
+						userid: userid,
 						arctileid: a,
 						updatetime: currentdate
 					};
 
-					$.post("../user/uaid.do",{test:JSON.stringify(datasend2)},function(data){
-						console.log("return data:"+data);
-					})
-					//$.ajax({
-					//	type:'POST',
-					//	//url:'http://27.148.153.187:3306/deepsearch/user/uaid.do',																//发用户id、文章ID，时间的地址
-					//	url:'../user/uaid.do',
-					//	data:JSON.stringify(datasend2),
-					//	contentType: 'application/json',
-					//	dataType:'json',
-					//	success:function(data,status){
-					//		if(status=='success'){
-					//			alert('请求成功');
-					//		}
-					//	}
-					//})
+					console.log(JSON.stringify(datasend2));
+					
+
+					$.post(
+					    //"http://27.148.153.187:3306/deepsearch/user/uaid.do", {
+						'http://localhost:8080/deepsearch/user/uaid.do',{
+					        data: JSON.stringify(datasend2),
+					        async: false
+					    },
+					    function(res) {
+					        console.log(res);
+						}
+					);
+
 				}
 			)
 

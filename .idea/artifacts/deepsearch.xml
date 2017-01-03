@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
-  <artifact type="war" name="deepsearch">
+  <artifact type="exploded-war" name="deepsearch">
     <output-path>$PROJECT_DIR$/out/artifacts/deepsearch</output-path>
-    <root id="archive" name="deepsearch.war">
+    <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="deepsearch" />
@@ -50,6 +50,7 @@
           <element id="file-copy" path="$PROJECT_DIR$/WebRoot/WEB-INF/lib/spring-context-support-4.2.6.RELEASE.jar" />
         </element>
       </element>
+      <element id="javaee-facet-resources" facet="deepsearch/web/Web2" />
       <element id="javaee-facet-resources" facet="deepsearch/web/Web" />
     </root>
   </artifact>
